@@ -45,7 +45,9 @@ constant TCLK : time := 10 ns;
   signal rising   : std_logic;
   signal falling  : std_logic;
   signal delay    : std_logic;
+
 begin
+  
   uut: entity work.edge_detector
     port map (
       clk      => clk,
@@ -58,7 +60,7 @@ begin
 
   clk <= not clk after TCLK/2;
 
-  stim : process
+  process
   begin
     rst_n <= '0';
     wait for 30;
@@ -78,15 +80,4 @@ begin
     wait;
   end process;
 
-  monitor : process(clk)
-  begin
-    if rising_edge(clk) then
-      report "t=" & integer'image(integer(now / 1 ns)) & " ns"
-        & " | signal_1=" & std_logic'image(signal_1)
-        & " | rising="   & std_logic'image(rising)
-        & " | falling="  & std_logic'image(falling)
-        & " | delay="    & std_logic'image(delay)
-        severity note;
-    end if;
-  end process;
 end Behavioral;
