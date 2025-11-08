@@ -46,7 +46,6 @@ constant TCLK : time := 10 ns;
   signal falling  : std_logic;
   signal delay    : std_logic;
 begin
-  -- DUT
   uut: entity work.edge_detector
     port map (
       clk      => clk,
@@ -62,22 +61,20 @@ begin
   stim : process
   begin
     rst_n <= '0';
-    wait for 3*TCLK;
+    wait for 30;
     rst_n <= '1';
 
     wait until rising_edge(clk);
-    wait for TCLK/2;
+    wait for 5;
 
-    signal_1 <= '1';  wait for 4*TCLK;
+    signal_1 <= '1';  wait for 30;
 
-    signal_1 <= '0';  wait for 3*TCLK;
+    signal_1 <= '0';  wait for 30;
 
-    signal_1 <= '1';  wait for 2*TCLK;
-    signal_1 <= '0';  wait for 2*TCLK;
-    signal_1 <= '1';  wait for 2*TCLK;
+    signal_1 <= '1';  wait for 20;
+    signal_1 <= '0';  wait for 20;
+    signal_1 <= '1';  wait for 20;
 
-    wait for 4*TCLK;
-    report "TB finished" severity note;
     wait;
   end process;
 
